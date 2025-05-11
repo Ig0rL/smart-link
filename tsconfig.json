@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -16,6 +17,17 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@smart-link/interfaces": ["src/libs/interfaces/index.ts"],
+      "@smart-link/configs": ["src/libs/configs/index.ts"],
+      "@smart-link/models": ["src/libs/models/index.ts"],
+      "@smart-link/contracts": ["src/libs/contracts/index.ts"]
+    },
+  },
+  "include": [
+    ".eslintrc.js",
+    "src",
+  ],
+  "exclude": ["node_modules", "dist"]
 }
