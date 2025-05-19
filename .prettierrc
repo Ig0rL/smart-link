@@ -8,5 +8,6 @@
   "importOrder": ["^\\w", "^@", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "printWidth": 130
 }

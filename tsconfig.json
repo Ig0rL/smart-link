@@ -18,11 +18,9 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "isolatedModules": true,
     "paths": {
-      "@smart-link/interfaces": ["src/libs/interfaces/index.ts"],
-      "@smart-link/configs": ["src/libs/configs/index.ts"],
-      "@smart-link/models": ["src/libs/models/index.ts"],
-      "@smart-link/contracts": ["src/libs/contracts/index.ts"]
+      "@/*": ["src/*"]
     },
   },
   "include": [

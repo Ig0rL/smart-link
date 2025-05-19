@@ -1,7 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
+    project: ['tsconfig.json', './tsconfig.spec.json'],
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
@@ -17,7 +17,12 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: [
+    '.eslintrc.js',
+    'node_modules/',
+    'dist/',
+    'coverage/'
+  ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -43,11 +48,16 @@ module.exports = {
     }],
     'no-tabs': 'off',
     'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
+    'prettier/prettier': ['error', {
+      arrowParens: 'never'
+    }],
+    'arrow-parens': 'off',
   },
   settings: {
     'import/resolver': {
       typescript: {
-        project: './tsconfig.json', // Укажите путь к tsconfig.json
+        alwaysTryTypes: true,
+        project: ['tsconfig.json', './tsconfig.spec.json'],
       },
     },
   },
