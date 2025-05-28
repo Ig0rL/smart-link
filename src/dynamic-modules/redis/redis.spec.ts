@@ -67,9 +67,7 @@ describe('RedisService', () => {
 	it('Выбрасывает ошибку при неудачной записи в Redis', async () => {
 		mockRedisClient.set.mockRejectedValue(new Error('Redis error'));
 
-		await expect(service.set('key', 'value')).rejects.toThrow(
-			InternalServerErrorException,
-		);
+		await expect(service.set('key', 'value')).rejects.toThrow(InternalServerErrorException);
 	});
 
 	it('Успешно получает значение из Redis', async () => {
@@ -91,9 +89,7 @@ describe('RedisService', () => {
 	it('Выбрасывает ошибку при неудачном чтении из Redis', async () => {
 		mockRedisClient.get.mockRejectedValue(new Error('Redis error'));
 
-		await expect(service.get('key')).rejects.toThrow(
-			InternalServerErrorException,
-		);
+		await expect(service.get('key')).rejects.toThrow(InternalServerErrorException);
 	});
 
 	it('Успешно удаляет значение из Redis', async () => {
@@ -107,9 +103,7 @@ describe('RedisService', () => {
 	it('Выбрасывает ошибку при неудачном удалении из Redis', async () => {
 		mockRedisClient.del.mockRejectedValue(new Error('Redis error'));
 
-		await expect(service.del('key')).rejects.toThrow(
-			InternalServerErrorException,
-		);
+		await expect(service.del('key')).rejects.toThrow(InternalServerErrorException);
 	});
 
 	it('Закрывает соединение с Redis', async () => {

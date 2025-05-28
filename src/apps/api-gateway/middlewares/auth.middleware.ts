@@ -1,9 +1,4 @@
-import {
-	HttpException,
-	HttpStatus,
-	Injectable,
-	NestMiddleware,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { NextFunction, Response } from 'express';
 

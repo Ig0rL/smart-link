@@ -22,7 +22,9 @@ export class ExceptionsFilter implements ExceptionFilter {
 				error: response.error || 'Ошибка валидации',
 				errorCode: response.errorCode || 'VALIDATION_ERROR',
 				message: response.message || '',
-				...(response.validationErrors &&  {validationErrors: response.validationErrors} ),
+				...(response.validationErrors && {
+					validationErrors: response.validationErrors,
+				}),
 			};
 		} else {
 			exceptionResponse = {

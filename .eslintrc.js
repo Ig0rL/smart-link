@@ -42,16 +42,17 @@ module.exports = {
       },
     ],
     'max-len': ['error', {
-      code: 130,
+      code: 120,
       ignoreComments: true,
       ignoreUrls: true,
     }],
     'no-tabs': 'off',
     'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
-    'prettier/prettier': ['error', {
-      arrowParens: 'never'
+    'prettier/prettier': ['off', {
+      chains: 'none',
+      bracketChain: false,
+      operatorChainBreak: false
     }],
-    'arrow-parens': 'off',
   },
   settings: {
     'import/resolver': {

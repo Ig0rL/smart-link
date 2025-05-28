@@ -1,10 +1,6 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import {
-	ClientProvider,
-	ClientsModule,
-	Transport,
-} from '@nestjs/microservices';
+import { ClientProvider, ClientsModule, Transport } from '@nestjs/microservices';
 
 import { REDIS_OPTIONS } from './redis.constants';
 import { IRedisServiceOptions } from './redis.interfaces';

@@ -10,5 +10,6 @@ export const getRedisConfig = () => ({
 		host: configService.get('REDIS_HOST'),
 		port: configService.get('REDIS_PORT'),
 		db: configService.get('REDIS_DB'),
+		password: configService.get('REDIS_PASSWORD'),
 	}),
 });

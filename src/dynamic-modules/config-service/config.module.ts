@@ -9,9 +9,7 @@ interface ConfigModuleOptions<T> {
 
 @Module({})
 export class ConfigModule {
-	static forRoot<T>(
-		options: ConfigModuleOptions<T> = {} as ConfigModuleOptions<T>,
-	): DynamicModule {
+	static forRoot<T>(options: ConfigModuleOptions<T> = {} as ConfigModuleOptions<T>): DynamicModule {
 		const { envFileName, configServiceClass } = options;
 
 		const configServiceProvider: Provider = {

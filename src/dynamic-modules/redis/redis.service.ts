@@ -1,8 +1,4 @@
-import {
-	Inject,
-	Injectable,
-	InternalServerErrorException,
-} from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import Redis from 'ioredis';
 import type { RedisOptions } from 'ioredis';
 
@@ -13,7 +9,8 @@ export class RedisService {
 	private readonly client: Redis;
 
 	constructor(
-		@Inject(REDIS_OPTIONS) redisOptions: RedisOptions,
+		@Inject(REDIS_OPTIONS)
+		redisOptions: RedisOptions,
 	) {
 		this.client = new Redis(redisOptions);
 

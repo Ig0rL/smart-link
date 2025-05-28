@@ -1,22 +1,37 @@
-import { Injectable } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import {
+	HttpException,
+	Injectable,
+} from '@nestjs/common';
 
 import { AuthProvider } from '@/apps/api-gateway/http-clients/auth/auth-provider';
+import { LoginDto, LoginResponseDto, RegisterDto } from '@/libs/contracts';
 
 @Injectable()
 export class AuthService {
 	constructor(private authHttpService: AuthProvider) {}
 
-	async isHealthy(): Promise<boolean> {
+	async login(request: LoginDto): Promise<LoginResponseDto> {
+		let result: LoginResponseDto;
 		try {
-			await firstValueFrom(this.authHttpService.get('/health'));
-			return true;
-		} catch {
-			return false;
+			result = await this.authHttpService.post('/api/v1/login', request);
+		} catch (error) {
+			throw new HttpException(
+				error?.response?.data,
+				error?.response?.status
+			);
 		}
+		return result;
 	}
 
-	async verifyToken(token: string) {
-		return firstValueFrom(this.authHttpService.post('/verify', { token }));
+	async register(request: RegisterDto): Promise<null> {
+		try {
+			await this.authHttpService.post('/api/v1/register', request);
+		} catch (error) {
+			throw new HttpException(
+				error?.response?.data,
+				error?.response?.status
+			);
+		}
+		return null;
 	}
 }

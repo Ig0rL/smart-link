@@ -3,7 +3,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 import { ApiGatewayConfigService } from '@/apps/api-gateway/configs/env.config';
+import { EXCLUDED_API_AUTH_MIDDLEWARE } from '@/apps/api-gateway/constants';
 import { LoginController } from '@/apps/api-gateway/controllers/api/auth/v1/login.controller';
+import { RegisterController } from '@/apps/api-gateway/controllers/api/auth/v1/register.controller';
 import { AuthProvider } from '@/apps/api-gateway/http-clients/auth/auth-provider';
 import { AuthService } from '@/apps/api-gateway/http-clients/auth/auth.service';
 import { AuthMiddleware } from '@/apps/api-gateway/middlewares/auth.middleware';
@@ -27,16 +29,13 @@ import { ConfigModule } from '@/dynamic-modules/config-service/config.module';
 		}),
 	],
 	providers: [AuthProvider, AuthService, AuthMiddleware],
-	controllers: [LoginController],
+	controllers: [LoginController, RegisterController],
 })
 export class ApiGatewayModule implements NestModule {
-	/**
-	 * Отсутствует токен в заголовках
-	 * Токен невалидный
-	 * Не предоставлены нужные зависимости в модуле
-	 * @param consumer
-	 */
 	configure(consumer: MiddlewareConsumer) {
-		//consumer.apply(AuthMiddleware).forRoutes('api/*');
+		consumer
+			.apply(AuthMiddleware)
+			.exclude(...EXCLUDED_API_AUTH_MIDDLEWARE)
+			.forRoutes('api/*');
 	}
 }

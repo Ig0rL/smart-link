@@ -1,10 +1,4 @@
-import {
-	HttpException,
-	HttpStatus,
-	Injectable,
-	ValidationError,
-	ValidationPipe,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, ValidationError, ValidationPipe } from '@nestjs/common';
 import type { ValidationPipeOptions } from '@nestjs/common';
 
 @Injectable()
@@ -17,7 +11,10 @@ export class RequestValidationPipe extends ValidationPipe {
 			validateCustomDecorators: true,
 			skipMissingProperties: false,
 			stopAtFirstError: false,
-			validationError: { target: true, value: true },
+			validationError: {
+				target: true,
+				value: true,
+			},
 			exceptionFactory: (errors: ValidationError[]) => {
 				const messages = errors.reduce((acc, error) => {
 					if (error.constraints) {

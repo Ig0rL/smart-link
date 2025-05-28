@@ -5,9 +5,13 @@
   "useTabs": true,
   "semi": true,
   "bracketSpacing": true,
+  "endOfLine": "auto",
+  "printWidth": 120,
+  "arrowParens": "always",
   "importOrder": ["^\\w", "^@", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "endOfLine": "auto",
-  "printWidth": 130
+  "chains": "none",
+  "bracketChain": false,
+  "operatorChainBreak": false
 }
