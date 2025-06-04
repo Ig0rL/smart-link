@@ -22,16 +22,6 @@ export class EnvConfigSchema {
 
 	@Expose()
 	@IsString()
-	DATABASE_URL: string = 'postgres://postgres:postgres@localhost:5432/smart_link';
-
-	@Expose()
-	@IsBoolean()
-	@IsOptional()
-	@Transform(({ value }) => value === 'true')
-	SEQ_LOG_QUERY_PARAMETERS = false;
-
-	@Expose()
-	@IsString()
 	@IsDefined()
 	@IsOptional()
 	JWT_SECRET_KEY: string = 'jwt_secret_key';
@@ -59,6 +49,18 @@ export class EnvConfigSchema {
 	@IsDefined()
 	@IsOptional()
 	AUTH_SERVICE_URL: string = 'http://localhost:3010';
+	
+	@Expose()
+	@Type(() => Number)
+	@IsNumber()
+	@IsDefined()
+	SMART_LINK_REQUEST_TIMEOUT: number = 5000;
+	
+	@Expose()
+	@IsString()
+	@IsDefined()
+	@IsOptional()
+	SMART_LINK_SERVICE_URL: string = 'http://localhost:3030';
 
 	@IsString()
 	@Expose()
