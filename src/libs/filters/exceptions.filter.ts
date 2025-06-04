@@ -1,5 +1,12 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import {
+	ExceptionFilter,
+	Catch,
+	ArgumentsHost,
+	HttpException,
+	HttpStatus,
+} from '@nestjs/common';
 import { Response } from 'express';
+import { Observable } from 'rxjs';
 
 interface IErrorResponse {
 	error: string;
@@ -10,36 +17,35 @@ interface IErrorResponse {
 
 @Catch()
 export class ExceptionsFilter implements ExceptionFilter {
-	catch(exception: HttpException, host: ArgumentsHost) {
+	catch(exception: Error, host: ArgumentsHost): Observable<IErrorResponse> | Response<IErrorResponse> {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
-		const status = exception.getStatus() ?? 500;
+		let status = HttpStatus.INTERNAL_SERVER_ERROR;
 		let exceptionResponse: IErrorResponse;
-
-		if (exception) {
-			const response = exception.getResponse() as IErrorResponse;
+		
+		if (exception instanceof HttpException) {
+			status = exception.getStatus();
+			const responseData = exception.getResponse() as IErrorResponse;
 			exceptionResponse = {
-				error: response.error || 'Ошибка валидации',
-				errorCode: response.errorCode || 'VALIDATION_ERROR',
-				message: response.message || '',
-				...(response.validationErrors && {
-					validationErrors: response.validationErrors,
+				error: responseData.error || 'Ошибка валидации',
+				errorCode: responseData.errorCode || 'VALIDATION_ERROR',
+				message: responseData.message || '',
+				...(responseData.validationErrors && {
+					validationErrors: responseData.validationErrors,
 				}),
 			};
 		} else {
 			exceptionResponse = {
 				error: 'Внутренняя ошибка сервера',
 				errorCode: 'INTERNAL_SERVER_ERROR',
-				message: exception instanceof Error ? exception.message : '',
+				message: exception.message || 'Неизвестная ошибка',
 			};
 		}
-
-		const errorResponse = {
+		
+		return response.status(status).json({
 			data: null,
 			success: false,
 			...exceptionResponse,
-		};
-
-		response.status(status).json(errorResponse);
+		});
 	}
 }

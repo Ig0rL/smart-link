@@ -6,8 +6,11 @@ import { ApiGatewayConfigService } from '@/apps/api-gateway/configs/env.config';
 import { EXCLUDED_API_AUTH_MIDDLEWARE } from '@/apps/api-gateway/constants';
 import { LoginController } from '@/apps/api-gateway/controllers/api/auth/v1/login.controller';
 import { RegisterController } from '@/apps/api-gateway/controllers/api/auth/v1/register.controller';
+import { MovieController } from '@/apps/api-gateway/controllers/smart-link/movie.controller';
 import { AuthProvider } from '@/apps/api-gateway/http-clients/auth/auth-provider';
 import { AuthService } from '@/apps/api-gateway/http-clients/auth/auth.service';
+import { SmartLinkProvider } from '@/apps/api-gateway/http-clients/smart-link/smart-link.provider';
+import { SmartLinkService } from '@/apps/api-gateway/http-clients/smart-link/smart-link.service';
 import { AuthMiddleware } from '@/apps/api-gateway/middlewares/auth.middleware';
 import { ConfigModule } from '@/dynamic-modules/config-service/config.module';
 
@@ -15,7 +18,7 @@ import { ConfigModule } from '@/dynamic-modules/config-service/config.module';
 	imports: [
 		HttpModule,
 		ConfigModule.forRoot({
-			envFileName: '.env-api-gateway',
+			envFileName: '.env',
 			configServiceClass: ApiGatewayConfigService,
 		}),
 		JwtModule.registerAsync({
@@ -28,8 +31,8 @@ import { ConfigModule } from '@/dynamic-modules/config-service/config.module';
 			}),
 		}),
 	],
-	providers: [AuthProvider, AuthService, AuthMiddleware],
-	controllers: [LoginController, RegisterController],
+	providers: [AuthProvider, AuthService, AuthMiddleware, SmartLinkProvider, SmartLinkService],
+	controllers: [LoginController, RegisterController, MovieController],
 })
 export class ApiGatewayModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

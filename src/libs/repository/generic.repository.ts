@@ -34,6 +34,14 @@ export class GenericRepository<T extends Model> extends BaseRepository<T> {
 		return this.formatResult(result);
 	}
 	
+	async bulkCreate(data: CreationAttributes<T>[]): Promise<T[]> {
+		const result = await this.model.bulkCreate(data, {
+			...this.mergeScopes(),
+			returning: true
+		});
+		return this.formatResult(result);
+	}
+	
 	async update(data: Partial<Attributes<T>>): Promise<T[]> {
 		const scopes = this.mergeScopes();
 		

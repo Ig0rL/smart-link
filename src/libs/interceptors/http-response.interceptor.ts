@@ -13,12 +13,14 @@ export interface IHttpResponse<T> {
 export class HttpResponseInterceptor<T> implements NestInterceptor<T, IHttpResponse<T>> {
 	intercept(context: ExecutionContext, next: CallHandler): Observable<IHttpResponse<T>> {
 		return next.handle().pipe(
-			map((data) => ({
-				data,
-				success: true,
-				error: null,
-				errorCode: null,
-			})),
+			map((data) => {
+				return {
+					data,
+					success: true,
+					error: null,
+					errorCode: null,
+				}
+			}),
 		);
 	}
 }
