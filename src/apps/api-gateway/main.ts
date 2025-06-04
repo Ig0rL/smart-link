@@ -14,7 +14,7 @@ async function bootstrap() {
 	app.useGlobalFilters(new ExceptionsFilter());
 	app.useGlobalPipes(new RequestValidationPipe());
 	await app.listen(configService.get('PORT'));
-	logger.log(`Микросервис "API-Gateway" запущен. Port:${configService.get('PORT')}`);
+	logger.log(`Микросервис "API-Gateway" запущен! Port:${configService.get('PORT')}`);
 }
 
 bootstrap();
