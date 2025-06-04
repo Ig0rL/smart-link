@@ -19,7 +19,7 @@ import { LoginController } from './controllers/v1/login.controller';
 	imports: [
 		SequelizeModule.forRootAsync(getPostgresConfig()),
 		ConfigModule.forRoot({
-			envFileName: '.env-auth',
+			envFileName: '.env',
 			configServiceClass: AuthConfigService,
 		}),
 		JwtModule.registerAsync({

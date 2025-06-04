@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 export abstract class BaseHttpProvider {
 	protected readonly httpService: HttpService;
 
-	protected constructor(baseURL: string, timeout: number) {
+	protected constructor(baseURL: string, timeout: number = 5000) {
 		this.httpService = new HttpService();
 		this.httpService.axiosRef.defaults.baseURL = baseURL;
 		this.httpService.axiosRef.defaults.timeout = timeout;

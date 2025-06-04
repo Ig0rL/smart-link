@@ -23,6 +23,16 @@ export class EnvConfigSchema {
 	@Expose()
 	@IsString()
 	DATABASE_URL: string = 'postgres://postgres:postgres@localhost:5432/smart_link';
+	
+	@Expose()
+	@IsString()
+	LOCATION_API_URL: string = 'http://ip-api.com/json/';
+	
+	@Expose()
+	@Type(() => Number)
+	@IsNumber()
+	@IsDefined()
+	LOCATION_API_TIMEOUT: number = 5000;
 
 	@Expose()
 	@IsBoolean()

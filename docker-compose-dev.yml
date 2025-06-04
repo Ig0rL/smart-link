@@ -1,50 +1,6 @@
 version: '3.8'
 
 services:
-  auth-service:
-    image: smart-link:latest
-    container_name: smart-link-auth
-    ports:
-      - "3010:3010"
-    env_file:
-      - .env-auth
-    depends_on:
-      - db
-      - redis
-    restart: unless-stopped
-    command: ["node", "dist/apps/auth/main"]
-    networks:
-      - smart-link-network
-
-  api-gateway:
-    image: smart-link:latest
-    container_name: smart-link-gateway
-    ports:
-      - "3020:3020"
-    env_file:
-      - .env-gateway
-    depends_on:
-      - auth-service
-      - smart-link-service
-    restart: unless-stopped
-    command: ["node", "dist/apps/api-gateway/main"]
-    networks:
-      - smart-link-network
-
-  smart-link-service:
-    image: smart-link:latest
-    container_name: smart-link-service
-    ports:
-      - "3030:3030"
-    env_file:
-      - .env-smart-link
-    depends_on:
-      - db
-    restart: unless-stopped
-    command: ["node", "dist/apps/smart-link/main"]
-    networks:
-      - smart-link-network
-
   db:
     image: postgres:16-alpine
     container_name: smart-link-db
