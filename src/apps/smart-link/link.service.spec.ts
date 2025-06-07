@@ -1,3 +1,7 @@
+import {
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Sequelize } from 'sequelize-typescript';
 
@@ -7,15 +11,11 @@ import {
 } from '@/apps/smart-link/constants';
 import { LinkRuleModel } from '@/libs/models/link/link-rule.model';
 import { LinkModel } from '@/libs/models/link/link.model';
+import { IncludeScope } from '@/libs/models/scopes/common/include.scope';
+import { GetLinkByLinkScope } from '@/libs/models/scopes/link/get-link-by-link.scope';
 import { GenericRepository } from '@/libs/repository/generic.repository';
 
 import { LinkService } from './link.service';
-import { GetLinkByLinkScope } from '@/libs/models/scopes/link/get-link-by-link.scope';
-import { IncludeScope } from '@/libs/models/scopes/common/include.scope';
-import {
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
 
 describe('LinkService', () => {
   let service: LinkService;
