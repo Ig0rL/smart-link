@@ -29,7 +29,6 @@ export class CreateLinkController extends BaseController<CreateLinkDto, LinkReso
   @HttpCode(HttpStatus.OK)
   async __invoke(@Body() data: CreateLinkDto): Promise<LinkResource> {
     const createdData = await this.linkService.createLink(data);
-    console.log('createdData', createdData);
     return new LinkResource(createdData).resource();
   }
 }

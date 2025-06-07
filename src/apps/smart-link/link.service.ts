@@ -76,6 +76,18 @@ export class LinkService {
       .plain()
       .findOne()
     
+    if (!linkData) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errorCode: 'LinkError',
+          error: 'Ошибка при получении ссылки',
+          message: 'URL не найден или не существует',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    
     const prparedLinkRules = linkData.rules.map((rule) => (rule.rule));
     return { link: linkData.link, strategy: linkData.strategy, rules: prparedLinkRules };
   }

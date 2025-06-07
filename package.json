@@ -98,6 +98,24 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "/interfaces/",
+      "\\.module\\.ts$",
+      "\\.dto\\.ts$",
+      "\\.entity\\.ts$",
+      "\\.js$",
+      "main\\.ts$",
+      "constants\\.ts$",
+      "\\.config\\.ts$",
+      "/scopes/",
+      "/modules/",
+      "\\.provider\\.ts$",
+      "/api-gateway/",
+      "/models/",
+      "/strategies/"
+    ]
   }
 }

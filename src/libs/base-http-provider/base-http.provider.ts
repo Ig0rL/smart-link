@@ -20,7 +20,6 @@ export abstract class BaseHttpProvider {
 
 	async post(url: string, data?: any, config?: AxiosRequestConfig) {
 		const { data: responseData } = await firstValueFrom(this.httpService.post(url, data, config));
-		console.log('responseData', responseData);
 		return responseData?.data ?? responseData;
 	}
 

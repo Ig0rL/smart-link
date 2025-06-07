@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   auth-service:
-    image: smart-link:latest
+    image: igorvz/smart-link:latest
     container_name: smart-link-auth
     ports:
       - "3010:3010"
@@ -17,7 +17,7 @@ services:
       - smart-link-network
 
   api-gateway:
-    image: smart-link:latest
+    image: igorvz/smart-link:latest
     container_name: smart-link-gateway
     ports:
       - "3020:3020"
@@ -32,7 +32,7 @@ services:
       - smart-link-network
 
   smart-link-service:
-    image: smart-link:latest
+    image: igorvz/smart-link:latest
     container_name: smart-link-service
     ports:
       - "3030:3030"

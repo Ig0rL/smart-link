@@ -10,6 +10,12 @@ import { LinkModel } from '@/libs/models/link/link.model';
 import { GenericRepository } from '@/libs/repository/generic.repository';
 
 import { LinkService } from './link.service';
+import { GetLinkByLinkScope } from '@/libs/models/scopes/link/get-link-by-link.scope';
+import { IncludeScope } from '@/libs/models/scopes/common/include.scope';
+import {
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 
 describe('LinkService', () => {
   let service: LinkService;
@@ -27,6 +33,7 @@ describe('LinkService', () => {
             scope: jest.fn().mockReturnThis(),
             plain: jest.fn().mockReturnThis(),
             create: jest.fn(),
+            findOne: jest.fn(),
           },
         },
         {
@@ -103,6 +110,65 @@ describe('LinkService', () => {
       })).rejects.toThrow(error);
       
       expect(mockTransaction.rollback).toHaveBeenCalled();
+    });
+  });
+  
+  describe('getLinkRules', () => {
+    it('Успешно возвращает правила для ссылки', async () => {
+      const mockLink = {
+        id: '1',
+        link: 'test.com',
+        strategy: 'dist/apps/smart-link/strategies/factory/test.com-strategy.factory',
+        rules: [
+          { id: '1', linkId: '1', rule: { datetime: '2024-03-20' } },
+          { id: '2', linkId: '1', rule: { datetime: '2024-03-21' } }
+        ]
+      };
+      
+      (linkRepository.scope as jest.Mock)
+        .mockImplementation((scope) => {
+          if (scope instanceof GetLinkByLinkScope) {
+            return linkRepository;
+          }
+          if (scope instanceof IncludeScope) {
+            return linkRepository;
+          }
+          return linkRepository;
+        });
+      (linkRepository.plain as jest.Mock).mockReturnThis();
+      (linkRepository.findOne as jest.Mock).mockResolvedValue(mockLink);
+      
+      const result = await service.getLinkRules('test.com');
+      
+      expect(result).toEqual({
+        link: mockLink.link,
+        strategy: mockLink.strategy,
+        rules: [
+          { datetime: '2024-03-20' },
+          { datetime: '2024-03-21' }
+        ]
+      });
+      
+      expect(linkRepository.scope).toHaveBeenNthCalledWith(1, expect.any(GetLinkByLinkScope), 'test.com');
+      expect(linkRepository.scope).toHaveBeenNthCalledWith(2, expect.any(IncludeScope));
+    });
+    
+    it('Выбрасывает HttpException если ссылка не найдена', async () => {
+      (linkRepository.scope as jest.Mock).mockReturnThis();
+      (linkRepository.plain as jest.Mock).mockReturnThis();
+      (linkRepository.findOne as jest.Mock).mockResolvedValue(null);
+      
+      await expect(service.getLinkRules('non-existent.com')).rejects.toThrow(
+        new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            errorCode: 'LinkError',
+            error: 'Ошибка при получении ссылки',
+            message: 'URL не найден или не существует',
+          },
+          HttpStatus.BAD_REQUEST,
+        )
+      );
     });
   });
 });
